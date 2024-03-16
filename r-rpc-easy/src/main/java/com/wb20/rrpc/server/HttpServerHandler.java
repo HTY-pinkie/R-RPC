@@ -33,6 +33,10 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
         System.out.println("Received request: " + request.method() + " " + request.uri());
 
         //异步处理HTTP请求
+        //在这段代码中，使用异步处理HTTP请求的主要目的是提高系统的性能和资源利用率。
+        //HTTP请求处理涉及到IO操作，例如从网络中读取请求数据，或者向网络中写入响应数据。在传统的同步处理模式中，当一个请求到来时，处理线程会阻塞等待IO操作完成，这样会导致处理线程被长时间阻塞，无法处理其他请求，降低了系统的并发能力和吞吐量。
+        //而异步处理模式则不同，当一个请求到来时，处理线程会立即返回，不会等待IO操作完成，而是将IO操作交给异步IO处理机制去处理。这样处理线程可以立即释放，可以继续处理其他请求，提高了系统的并发能力和吞吐量。
+        //异步处理HTTP请求的好处是可以充分利用系统的资源，提高系统的并发能力和吞吐量，同时能够更好地响应大量请求，保持系统的稳定性。
         request.bodyHandler(body -> {
             byte[] bytes = body.getBytes();
             //RPC请求对象
