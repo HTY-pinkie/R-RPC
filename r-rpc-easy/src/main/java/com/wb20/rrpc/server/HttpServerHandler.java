@@ -66,7 +66,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
                 // 第一个参数是方法的调用者，也就是方法所属的对象实例，这里是刚刚创建的 implClass 的新实例。
                 //第二个参数是方法的参数，通过 rpcRequest.getArgs() 获取。这样就实现了对远程服务方法的调用，并将结果存储在 result 变量中。
                 Object result = method.invoke(implClass.newInstance(), rpcRequest.getArgs());
-                //封装返回结果
+                //封装返回方法执行结果
                 //设置响应数据
                 rpcResponse.setData(result);
                 //设置响应数据类型
@@ -81,6 +81,8 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
                 rpcResponse.setException(e);
             }
 
+            //响应
+            doResponse(request, rpcResponse, serializer);
 
         });
 
