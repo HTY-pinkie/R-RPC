@@ -4,7 +4,7 @@ import com.wb20.example.common.model.User;
 import com.wb20.example.common.service.UserService;
 
 /**
- * 建议服务消费者示例
+ * 简易服务消费者示例
  */
 public class EasyConsumerExample {
     public static void main(String[] args) {
