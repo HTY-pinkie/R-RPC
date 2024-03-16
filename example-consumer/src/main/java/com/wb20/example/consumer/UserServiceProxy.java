@@ -34,7 +34,7 @@ public class UserServiceProxy implements UserService {
             //将请求序列化
             byte[] bodyBytes = serializer.serialize(rpcRequest);
             // 发送请求
-            //创建一个 HTTP POST 请求对象，指定了请求的目标 URL
+            //创建一个 HTTP POST 请求对象，指定了请求的目标 URL 发送后会被rpc监听处理
             try (HttpResponse httpResponse = HttpRequest.post("http://localhost:8080")
                     //设置请求体，其中 bodyBytes 是请求体的字节数组，包含了要发送的数据
                     .body(bodyBytes)

@@ -28,7 +28,7 @@ public class VertxHttpServer implements HttpServer {
 //                    //使用end()方法将字符串"Hello from Vert.x HTTP server!"作为响应内容发送给客户端，并结束响应。这意味着响应的内容为"Hello from Vert.x HTTP server!"，并且不会再发送任何其他内容
 //                    .end("Hello from Vert.x HTTP server!");
 //        });
-        //2.0
+        //2.0 调用HttpServerHandler
         server.requestHandler(new HttpServerHandler());
 
         //启动HTTP服务器并'监听指定端口'

@@ -15,6 +15,7 @@ public class EasyProviderExample {
 
         //启动web服务
         VertxHttpServer httpServer = new VertxHttpServer();
+        //调用easy rpc里的方法
         httpServer.doStart(8080);
     }
 }
