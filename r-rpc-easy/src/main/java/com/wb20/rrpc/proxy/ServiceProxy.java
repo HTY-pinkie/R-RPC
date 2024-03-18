@@ -46,6 +46,7 @@ public class ServiceProxy implements InvocationHandler {
                 byte[] result = httpResponse.bodyBytes();
                 //反序列化
                 RpcResponse rpcResponse = serializer.deserialize(result, RpcResponse.class);
+                return rpcResponse.getData();
             }
         } catch (IOException e) {
             e.printStackTrace();
