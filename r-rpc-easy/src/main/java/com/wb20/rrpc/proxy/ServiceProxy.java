@@ -1,4 +1,4 @@
-package com.wb20.example.consumer;
+package com.wb20.rrpc.proxy;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
