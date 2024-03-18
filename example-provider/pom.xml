@@ -17,6 +17,12 @@
     <dependencies>
         <dependency>
             <groupId>com.wb20</groupId>
+            <artifactId>r-rpc-core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+<!--        todo 后期删除-->
+        <dependency>
+            <groupId>com.wb20</groupId>
             <artifactId>r-rpc-easy</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

@@ -10,6 +10,7 @@
     <description>R-RPC</description>
     <modules>
         <module>example-common</module>
+        <module>r-rpc-core</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
