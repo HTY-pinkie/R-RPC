@@ -1,9 +1,12 @@
 package com.wb20.rrpc.model;
 
+import com.wb20.rrpc.serializer.Serializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * RPC 响应
@@ -17,7 +20,7 @@ import lombok.NoArgsConstructor;
 //注解会为类生成一个无参构造方法。这在某些情况下很有用，例如当使用反射创建对象时，或者需要在对象创建后设置字段的值。
 @NoArgsConstructor
 //Serializable 是 Java 中的一个接口，用于标记类的实例可以被序列化
-public class RpcResponse {
+public class RpcResponse implements Serializable {
 
     /**
      * 响应数据
