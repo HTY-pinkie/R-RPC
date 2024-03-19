@@ -61,6 +61,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
 
             //获取要调用的服务实现类,通过反射调用
             try {
+                //获取服务实例：先从rpcRequest中获取服务名称，再从LocalRegistry中获取服务实例
                 Class<?> implClass = LocalRegistry.get(rpcRequest.getServiceName());
                 //通过反射从获取到的实现类中，根据方法名和参数类型获取`方法`对象
                 Method method = implClass.getMethod(rpcRequest.getMethodName(), rpcRequest.getParameterTypes());
@@ -71,7 +72,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
                 //第二个参数是方法的参数，通过 rpcRequest.getArgs() 获取。这样就实现了对远程服务方法的调用，并将结果存储在 result 变量中。
                 Object result = method.invoke(implClass.newInstance(), rpcRequest.getArgs());
                 //封装返回方法执行结果
-                //设置响应数据
+                //设置响应数据也就是实例的方法的执行结果
                 rpcResponse.setData(result);
                 //设置响应数据类型
                 rpcResponse.setDataType(method.getReturnType());

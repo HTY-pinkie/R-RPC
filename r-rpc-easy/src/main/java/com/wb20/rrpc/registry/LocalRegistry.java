@@ -23,7 +23,7 @@ public class LocalRegistry {
     }
 
     /**
-     * 获取服务
+     * 获取服务实例
      * @param serviceName 服务名称
      * @return
      */
