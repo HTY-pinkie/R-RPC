@@ -28,6 +28,7 @@ public class ServiceProxy implements InvocationHandler {
     //这三个参数是由 Java 动态代理机制在调用代理对象的方法时自动传递给 invoke 方法的，开发者无需手动传入。在 invoke 方法中，可以根据这些参数来动态地处理方法调用，例如构造远程调用请求、发送请求、处理响应等。
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        System.out.println("调用动态代理ProxyUser");
 
         //指定序列化器
         Serializer serializer = new JdkSerializer();
