@@ -7,6 +7,8 @@ import java.util.Date;
 public class LogHandler implements InvocationHandler {
     Object target;  // 被代理的对象，实际的方法执行者
 
+    public LogHandler() {
+    }
     public LogHandler(Object target) {
         this.target = target;
     }

@@ -13,7 +13,7 @@ import java.lang.reflect.Proxy;
  * static boolean isProxyClass(Class<?> cl) 返回 cl 是否为一个代理类
  */
 public class Client2 {
-    public static void main(String[] args) throws IllegalAccessException, InstantiationException {
+        public static void main(String[] args) throws IllegalAccessException, InstantiationException {
         // 设置变量可以保存动态代理类，默认名称以 $Proxy0 格式命名
         // System.getProperties().setProperty("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
         // 1. 创建被代理的对象，AdminService接口的实现类
@@ -37,6 +37,6 @@ public class Client2 {
         proxy.update();
 
         // 保存JDK动态代理生成的代理类，类名保存为 AdminServiceProxy
-        ProxyUtils.generateClassFile(AdminServiceImpl.getClass(), "AdminServiceProxy");
+//        ProxyUtils.generateClassFile(AdminServiceImpl.getClass(), "AdminServiceProxy");
     }
 }

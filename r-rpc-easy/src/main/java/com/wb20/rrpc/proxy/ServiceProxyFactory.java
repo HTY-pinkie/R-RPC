@@ -10,7 +10,7 @@ public class ServiceProxyFactory {
     //返回对应服务的代理服务
     public static <T> T getProxy(Class<T> serviceClass) {
         //new ServiceProxy()这个返回了data也就是user，
-        //Proxy.newProxyInstance 方法创建的代理对象是通过 ServiceProxy 类实例化的
+        //返回指定接口的代理类的实例，该接口将方法调用分派给指定的调用处理程序。
         return (T) Proxy.newProxyInstance(
                 //serviceClass.getClassLoader() 部分用于获取指定服务接口 serviceClass 所使用的类加载器。这个类加载器通常是加载定义接口的类的类加载器
                 serviceClass.getClassLoader(),
