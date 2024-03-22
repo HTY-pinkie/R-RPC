@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 
 /**
  * Mock 服务代理（JDK动态代理）
+ * 模拟远程服务
  */
 @Slf4j
 public class MockServiceProxy implements InvocationHandler {
@@ -19,6 +20,8 @@ public class MockServiceProxy implements InvocationHandler {
      * @param method {@code Method}实例对应于在代理实例上调用的接口方法。{@code Method}对象的声明类将是该方法被声明的接口，该接口可能是代理类继承该方法所通过的代理接口的超接口。
      *
      * @param args:一个对象数组，其中包含在代理实例的方法调用中传递的参数值，如果接口方法不接受参数，则为{@code null}。基本类型的参数被包装在适当的基本包装器类的实例中，例如{@code java.lang.Integer}或{@code java.lang.Boolean}。
+     *
+     * 有几个方法调用几次
      *
      * @return
      * @throws Throwable
