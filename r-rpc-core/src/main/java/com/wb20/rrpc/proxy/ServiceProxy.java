@@ -2,10 +2,12 @@ package com.wb20.rrpc.proxy;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import com.wb20.rrpc.RpcApplication;
 import com.wb20.rrpc.model.RpcRequest;
 import com.wb20.rrpc.model.RpcResponse;
 import com.wb20.rrpc.serializer.JdkSerializer;
 import com.wb20.rrpc.serializer.Serializer;
+import com.wb20.rrpc.serializer.SerializerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
@@ -31,7 +33,7 @@ public class ServiceProxy implements InvocationHandler {
         System.out.println("调用动态代理ProxyUser");
 
         //指定序列化器
-        Serializer serializer = new JdkSerializer();
+        Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer());
 
         //构造请求
         //动态代理依赖method里的信息，静态代理直接写死了这里
@@ -47,9 +49,9 @@ public class ServiceProxy implements InvocationHandler {
             //发送请求
             // todo 注意，这里地址被硬编码了（需要使用注册中心和服务发现机制解决）
             //数据从HttpServerHandler的76行和114行返回
-            try(HttpResponse httpResponse = HttpRequest.post("http://localhost:8081")
-                         .body(bodyBytes)
-                         .execute()) {
+            try (HttpResponse httpResponse = HttpRequest.post("http://localhost:8081")
+                    .body(bodyBytes)
+                    .execute()) {
                 //
                 byte[] result = httpResponse.bodyBytes();
                 //反序列化
