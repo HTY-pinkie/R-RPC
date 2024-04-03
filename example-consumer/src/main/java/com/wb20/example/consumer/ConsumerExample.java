@@ -2,9 +2,7 @@ package com.wb20.example.consumer;
 
 import com.wb20.example.common.model.User;
 import com.wb20.example.common.service.UserService;
-import com.wb20.rrpc.config.RpcConfig;
 import com.wb20.rrpc.proxy.ServiceProxyFactory;
-import com.wb20.rrpc.utils.ConfigUtils;
 
 public class ConsumerExample {
 
@@ -20,8 +18,8 @@ public class ConsumerExample {
         } else {
             System.out.println("user == null");
         }
-        long number = userService.getNumber();
-        System.out.println(number);
+//        int number = userService.getNumber();
+//        System.out.println(number);
     }
 
 }

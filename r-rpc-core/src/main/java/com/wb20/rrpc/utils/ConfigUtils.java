@@ -36,6 +36,7 @@ public class ConfigUtils {
         }
         configFileBuilder.append(".properties");
         Props props = new Props(configFileBuilder.toString());
+        System.out.println(props);
         //调用Props的 toBean 方法将属性文件转换为指定类型的Java对象，并指定属性名的前缀
         return props.toBean(tClass, prefix);
     }

@@ -34,12 +34,12 @@ public class SpiLoader {
     /**
      * 系统SPI目录
      */
-    private static final String RPC_SYSTEM_SPI_DIR = "META_INF/rpc/system";
+    private static final String RPC_SYSTEM_SPI_DIR = "META_INF/rpc/system/";
 
     /**
      * 用户自定义SPI目录
      */
-    private static final String RPC_CUSTOM_SPI_DIR = "META_INF/rpc/custom";
+    private static final String RPC_CUSTOM_SPI_DIR = "META_INF/rpc/custom/";
 
     /**
      * 扫描路径
@@ -56,7 +56,7 @@ public class SpiLoader {
      */
     public static void loadAll() {
         log.info("加载所有SPI");
-        for(Class<?> aClass : LOAD_CLASS_LIST) {
+        for (Class<?> aClass : LOAD_CLASS_LIST) {
             load(aClass);
         }
     }
@@ -73,11 +73,12 @@ public class SpiLoader {
         String tClassName = tClass.getName();
         //判断是否已经存储了这个类
         Map<String, Class<?>> keyClassMap = loaderMap.get(tClassName);
-        if(keyClassMap == null) {
+        System.out.println(loaderMap);
+        if (keyClassMap == null) {
             throw new RuntimeException(String.format("SpiLoader 未加载 %s 类型", tClassName));
         }
         //判断是否有这个key，key是jdk，hessian，json等
-        if(!keyClassMap.containsKey(key)) {
+        if (!keyClassMap.containsKey(key)) {
             throw new RuntimeException(String.format("SpiLoader的 %s 不存在 key = %s的类型", tClassName, key));
         }
         //获取要加载的实现类型
@@ -85,7 +86,7 @@ public class SpiLoader {
         //从实例缓存中加载指定类型的实例
         String implClassName = implClass.getName();
         //如果实例缓存中没有
-        if(!instanceCache.containsKey(implClassName)) {
+        if (!instanceCache.containsKey(implClassName)) {
             try {
                 instanceCache.put(implClassName, implClass.newInstance());
             } catch (InstantiationException | IllegalAccessException e) {
@@ -106,19 +107,19 @@ public class SpiLoader {
         log.info("加载类型为 {} 的SPI", loadClass.getName());
         //扫描路径，用户自定义的SPI优先级高于系统SPI
         Map<String, Class<?>> keyClassMap = new HashMap<>();
-        for(String scanDir : SCAN_DIRS) {
+        for (String scanDir : SCAN_DIRS) {
             //获得资源的URL scanDir + loadClass.getName()拼出完整目录 例如:META_INF/rpc/system/com.wb20.rrpc.serializer.Serializer
             List<URL> resources = ResourceUtil.getResources(scanDir + loadClass.getName());
             //读取每个资源文件
-            for(URL resource : resources) {
+            for (URL resource : resources) {
                 try {
                     InputStreamReader inputStreamReader = new InputStreamReader(resource.openStream());
                     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                     String line;
-                    while((line = bufferedReader.readLine()) != null) {
+                    while ((line = bufferedReader.readLine()) != null) {
                         //jdk=com.wb20.rrpc.serializer.JdkSerializer
                         String[] strArray = line.split("=");
-                        if(strArray.length > 1) {
+                        if (strArray.length > 1) {
                             //jdk
                             String key = strArray[0];
                             //com.wb20.rrpc.serializer.JdkSerializer

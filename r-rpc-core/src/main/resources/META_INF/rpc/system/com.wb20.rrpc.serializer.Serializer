@@ -1,4 +1,4 @@
-jdk=com.wb20.rrpc.serializer.JdkSerializer
-hessian=com.wb20.rrpc.serializer.HessianSerializer
-json=com.wb20.rrpc.serializer.JsonSerializer
-kryo=com.wb20.rrpc.serializer.KryoSerializer
+a=com.wb20.rrpc.serializer.JdkSerializer
+b=com.wb20.rrpc.serializer.HessianSerializer
+c=com.wb20.rrpc.serializer.JsonSerializer
+d=com.wb20.rrpc.serializer.KryoSerializer
