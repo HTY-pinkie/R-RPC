@@ -1,8 +1,13 @@
 package com.wb20.rrpc.model;
 
+import cn.hutool.core.util.StrUtil;
+import com.wb20.rrpc.constant.RpcConstant;
+import lombok.Data;
+
 /**
  * 服务元信息（注册信息）
  */
+@Data
 public class ServiceMetaInfo {
 
     /**
@@ -13,7 +18,17 @@ public class ServiceMetaInfo {
     /**
      * 服务版本号
      */
-    private String serviceVersion;
+    private String serviceVersion = RpcConstant.DEFAULT_SERVICE_VERSION;
+
+    /**
+     * 服务域名
+     */
+    private String serviceHost;
+
+    /**
+     * 服务端口号
+     */
+    private Integer servicePort;
 
     /**
      * 服务地址
@@ -41,5 +56,17 @@ public class ServiceMetaInfo {
      */
     public String getServiceNodeKey() {
         return String.format("%s:%s", getServiceKey(), serviceAddress);
+    }
+
+    /**
+     * 获取完整服务地址
+     *
+     * @return
+     */
+    public String getServiceAddress() {
+        if(!StrUtil.contains(serviceHost, "http")) {
+            return String.format("http://%s:%s", serviceHost, servicePort);
+        }
+        return String.format("%s:%s", serviceHost, servicePort);
     }
 }

@@ -1,10 +1,16 @@
 package com.wb20.rrpc.proxy;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.wb20.rrpc.RpcApplication;
+import com.wb20.rrpc.config.RpcConfig;
+import com.wb20.rrpc.constant.RpcConstant;
 import com.wb20.rrpc.model.RpcRequest;
 import com.wb20.rrpc.model.RpcResponse;
+import com.wb20.rrpc.model.ServiceMetaInfo;
+import com.wb20.rrpc.registry.Registry;
+import com.wb20.rrpc.registry.RegistryFactory;
 import com.wb20.rrpc.serializer.JdkSerializer;
 import com.wb20.rrpc.serializer.Serializer;
 import com.wb20.rrpc.serializer.SerializerFactory;
@@ -12,6 +18,7 @@ import com.wb20.rrpc.serializer.SerializerFactory;
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * 服务代理（JDK 动态代理）
@@ -36,9 +43,10 @@ public class ServiceProxy implements InvocationHandler {
         Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer());
 
         //构造请求
+        String serviceName = method.getDeclaringClass().getName();
         //动态代理依赖method里的信息，静态代理直接写死了这里
         RpcRequest rpcRequest = RpcRequest.builder()
-                .serviceName(method.getDeclaringClass().getName())
+                .serviceName(serviceName)
                 .methodName(method.getName())
                 .parameterTypes(method.getParameterTypes())
                 .args(args)
@@ -46,10 +54,24 @@ public class ServiceProxy implements InvocationHandler {
         try {
             //序列化请求
             byte[] bodyBytes = serializer.serialize(rpcRequest);
+
+            //从注册中心获取服务提供者请求地址
+            RpcConfig rpcConfig = RpcApplication.getRpcConfig();
+            Registry registry = RegistryFactory.getInstance(rpcConfig.getRegistryConfig().getRegistry());
+            ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
+            serviceMetaInfo.setServiceName(serviceName);
+            serviceMetaInfo.setServiceVersion(RpcConstant.DEFAULT_SERVICE_VERSION);
+            List<ServiceMetaInfo> serviceMetaInfoList = registry.serviceDiscovery(serviceMetaInfo.getServiceKey());
+            if(CollUtil.isEmpty(serviceMetaInfoList)) {
+                throw new RuntimeException("暂无服务地址");
+            }
+            //暂时先去第一个
+            ServiceMetaInfo selectedServiceMetaInfo = serviceMetaInfoList.get(0);
+
             //发送请求
             // todo 注意，这里地址被硬编码了（需要使用注册中心和服务发现机制解决）
             //数据从HttpServerHandler的76行和114行返回
-            try (HttpResponse httpResponse = HttpRequest.post("http://localhost:8081")
+            try (HttpResponse httpResponse = HttpRequest.post(selectedServiceMetaInfo.getServiceAddress())
                     .body(bodyBytes)
                     .execute()) {
                 //
