@@ -1,7 +1,10 @@
 package com.wb20.rrpc;
 
+import com.wb20.rrpc.config.RegistryConfig;
 import com.wb20.rrpc.config.RpcConfig;
 import com.wb20.rrpc.constant.RpcConstant;
+import com.wb20.rrpc.registry.Registry;
+import com.wb20.rrpc.registry.RegistryFactory;
 import com.wb20.rrpc.utils.ConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,6 +37,11 @@ public class RpcApplication {
     public static void init(RpcConfig newRpcConfig) {
         rpcConfig = newRpcConfig;
         log.info("rpc init, config = {}", newRpcConfig.toString());
+        //注册中心初始化
+        RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
+        Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
+        registry.init(registryConfig);
+        log.info("registry init, config = {}", registryConfig);
     }
 
     /**
