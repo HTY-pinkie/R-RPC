@@ -20,7 +20,8 @@ public class EtcdRegistry implements Registry{
     private KV kvClient;
 
     /**
-     * 根节点
+     * 根节点 Nodes创建的文件夹就是从这里来
+     * 关于文件夹的提取应该跟字节序列化（ByteSequence）有关
      */
     private static final String ETCD_ROOT_PATH = "/rpc/";
 
@@ -61,6 +62,7 @@ public class EtcdRegistry implements Registry{
         //将键值对与租约关联起来，并设置过期时间,PutOption 是 etcd Java 客户端库中的一个类，用于表示在使用 Put 操作时的选项
         PutOption putOption = PutOption.builder().withLeaseId(leaseId).build();
         kvClient.put(key, value, putOption).get();
+        System.out.println(ETCD_ROOT_PATH + serviceMetaInfo.getServiceNodeKey());
 
     }
 
@@ -70,8 +72,10 @@ public class EtcdRegistry implements Registry{
      */
     @Override
     public void unRegister(ServiceMetaInfo serviceMetaInfo) {
+
         kvClient.delete(ByteSequence.from(ETCD_ROOT_PATH +
                 serviceMetaInfo.getServiceNodeKey(), StandardCharsets.UTF_8));
+        System.out.println(ETCD_ROOT_PATH + serviceMetaInfo.getServiceNodeKey());
     }
 
     /**
