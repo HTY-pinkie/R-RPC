@@ -68,8 +68,8 @@ public class ServiceProxy implements InvocationHandler {
             //暂时先去第一个
             ServiceMetaInfo selectedServiceMetaInfo = serviceMetaInfoList.get(0);
 
-            System.out.println("proxy中的http地址：" + selectedServiceMetaInfo.getServiceAddress());
-            System.out.println("proxy中的request请求：" + HttpRequest.post(selectedServiceMetaInfo.getServiceAddress().toString()));
+//            System.out.println("proxy中的http地址：" + selectedServiceMetaInfo.getServiceAddress());
+//            System.out.println("proxy中的request请求：" + HttpRequest.post(selectedServiceMetaInfo.getServiceAddress().toString()));
 
 
             //发送请求

@@ -75,8 +75,15 @@ public class EtcdRegistry implements Registry{
     @Override
     public void unRegister(ServiceMetaInfo serviceMetaInfo) {
 
-        kvClient.delete(ByteSequence.from(ETCD_ROOT_PATH +
-                serviceMetaInfo.getServiceNodeKey(), StandardCharsets.UTF_8));
+        try {
+            //todo 不加get删不了
+            kvClient.delete(ByteSequence.from(ETCD_ROOT_PATH +
+                    serviceMetaInfo.getServiceNodeKey(), StandardCharsets.UTF_8)).get();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println(ETCD_ROOT_PATH + serviceMetaInfo.getServiceNodeKey());
     }
 
