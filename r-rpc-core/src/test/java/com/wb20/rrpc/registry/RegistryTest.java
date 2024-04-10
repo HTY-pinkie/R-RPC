@@ -77,6 +77,7 @@ public class RegistryTest {
         String serviceKey = serviceMetaInfo.getServiceKey();
         //3.服务发现（获取某服务的所有节点，消费端）
         List<ServiceMetaInfo> serviceMetaInfoList = registry.serviceDiscovery(serviceKey);
+        System.out.println(serviceMetaInfoList);
         //断言确保了对象 serviceMetaInfoList 不为空。如果 serviceMetaInfoList 为空，则测试将失败
         Assert.assertNotNull(serviceMetaInfoList);
     }

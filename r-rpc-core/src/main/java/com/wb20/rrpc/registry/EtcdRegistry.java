@@ -59,6 +59,8 @@ public class EtcdRegistry implements Registry{
         ByteSequence key = ByteSequence.from(registerKey, StandardCharsets.UTF_8);
         ByteSequence value = ByteSequence.from(JSONUtil.toJsonStr(serviceMetaInfo), StandardCharsets.UTF_8);
 
+        System.out.println("register:" + key);
+
         //将键值对与租约关联起来，并设置过期时间,PutOption 是 etcd Java 客户端库中的一个类，用于表示在使用 Put 操作时的选项
         PutOption putOption = PutOption.builder().withLeaseId(leaseId).build();
         kvClient.put(key, value, putOption).get();
@@ -89,14 +91,16 @@ public class EtcdRegistry implements Registry{
         //前缀搜索， 结尾一定要加'/'
         String searchPrefix = ETCD_ROOT_PATH + serviceKey + '/';
 
-        //前缀查询
-        GetOption getOption = GetOption.builder().isPrefix(true).build();
         try {
+            //前缀查询
+            GetOption getOption = GetOption.builder().isPrefix(true).build();
+            System.out.println("前缀查询：" + searchPrefix);
             List<KeyValue> keyValues = kvClient.get(
                             ByteSequence.from(searchPrefix, StandardCharsets.UTF_8),
                             getOption)
                     .get()
                     .getKvs();
+            System.out.println("EtcdRegistry中:" + keyValues);
             //解析服务信息
             return keyValues.stream()
                     .map(keyValue -> {
