@@ -11,6 +11,9 @@ import com.wb20.rrpc.registry.RegistryFactory;
 import com.wb20.rrpc.server.HttpServer;
 import com.wb20.rrpc.server.VertxHttpServer;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * 服务提供者示例
  */

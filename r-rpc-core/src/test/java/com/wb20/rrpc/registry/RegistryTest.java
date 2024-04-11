@@ -81,4 +81,13 @@ public class RegistryTest {
         //断言确保了对象 serviceMetaInfoList 不为空。如果 serviceMetaInfoList 为空，则测试将失败
         Assert.assertNotNull(serviceMetaInfoList);
     }
+
+    @Test
+    public void heartBeat() throws Exception {
+        //init 方法中已经执行心跳检测了
+        register();
+        //阻塞1分钟
+        Thread.sleep(60 * 1000L);
+    }
+
 }
