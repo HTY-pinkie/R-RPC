@@ -12,6 +12,14 @@ public class ConsumerExample {
         User user = new User();
         user.setName("blink");
         //调用
+//        for(int i = 0; i < 3; i++) {
+//            User newUser = userService.getUser(user);
+//            if(newUser != null) {
+//                System.out.println(newUser.getName());
+//            } else {
+//                System.out.println("user == null");
+//            }
+//        }
         User newUser = userService.getUser(user);
         if(newUser != null) {
             System.out.println(newUser.getName());
