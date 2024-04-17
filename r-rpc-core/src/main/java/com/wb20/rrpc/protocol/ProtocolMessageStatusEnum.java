@@ -21,8 +21,18 @@ public enum ProtocolMessageStatusEnum {
         this.value = value;
     }
 
+    /**
+     * 根据 value 获取枚举
+     * @param value
+     * @return
+     */
     public static ProtocolMessageStatusEnum getEnumByValue(int value) {
-
+        for(ProtocolMessageStatusEnum anEnum : ProtocolMessageStatusEnum.values()) {
+            if(anEnum.value == value) {
+                return anEnum;
+            }
+        }
+        return null;
     }
 
 
