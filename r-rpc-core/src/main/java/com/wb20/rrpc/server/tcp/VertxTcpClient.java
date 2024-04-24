@@ -1,6 +1,7 @@
 package com.wb20.rrpc.server.tcp;
 
 import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.net.NetSocket;
 
 public class VertxTcpClient {
@@ -14,9 +15,14 @@ public class VertxTcpClient {
             if (result.succeeded()) {
                 System.out.println("Connected to TCP server");
                 NetSocket socket = result.result();
-                for (int i = 0; i < 1; i++) {
+                for (int i = 0; i < 1000; i++) {
                     //发送数据
-                    socket.write("Hello, server!Hello, server!Hello, server!");
+                    Buffer buffer = Buffer.buffer();
+                    String str = "Hello, server!Hello, server!Hello, server!";
+                    buffer.appendInt(0);
+                    buffer.appendInt(str.getBytes().length);
+                    buffer.appendBytes(str.getBytes());
+                    socket.write(buffer);
                 }
                 //接收响应
                 socket.handler(buffer -> {
