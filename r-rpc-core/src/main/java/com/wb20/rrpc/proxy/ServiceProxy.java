@@ -138,6 +138,7 @@ public class ServiceProxy implements InvocationHandler {
                             System.out.println("Failed to connect to TCP server");
                         }
                     });
+            // 阻塞，直到响应完成，才会继续向下执行
             RpcResponse rpcResponse = responseFuture.get();
             //记得关闭连接
             netClient.close();

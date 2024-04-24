@@ -10,6 +10,7 @@ import com.wb20.rrpc.registry.Registry;
 import com.wb20.rrpc.registry.RegistryFactory;
 import com.wb20.rrpc.server.HttpServer;
 import com.wb20.rrpc.server.VertxHttpServer;
+import com.wb20.rrpc.server.tcp.VertxTcpServer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -45,8 +46,12 @@ public class ProviderExample {
         }
 
         //启动web服务
-        HttpServer httpServer = new VertxHttpServer();
-        httpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
+//        HttpServer httpServer = new VertxHttpServer();
+//        httpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
+
+        //启动TCP服务
+        VertxTcpServer vertxTcpServer = new VertxTcpServer();
+        vertxTcpServer.doStart(8081);
 
 
     }
